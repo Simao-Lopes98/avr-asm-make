@@ -16,7 +16,7 @@ CFLAGS = -mmcu=$(MCU) -Wall
 LDFLAGS = -mmcu=$(MCU) -nostartfiles 
 
 # Port for avrdude (change if needed)
-PORT = /dev/ttyACM0
+PORT = /dev/ttyACM1
 BAUD = 115200
 
 # File names
@@ -47,6 +47,10 @@ flash: $(HEX)
 # Clean up build files
 clean:
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.elf $(FLASH_DIR)/*.hex
+
+dump:
+	avr-objdump -S -m avr build/main.elf > build/main.lst
+
 
 # Phony targets
 .PHONY: all flash clean
