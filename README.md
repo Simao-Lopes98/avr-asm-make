@@ -4,32 +4,32 @@ Learning ASM on AVR and Makefiles
 # Make Commands
 
 To compile
-``` Bash
+```` Bash
 make
 ````
+
 To flash
-``` Bash
+```` Bash
 make flash
 ````
-To clean directories
-``` Bash
+To clean .o, .elf, .hex files
+```` Bash
 make clean
 ````
 
 ## WSL Link ATMega328
-
-[Microsoft - WSL - Connect USB](https://learn.microsoft.com/en-us/windows/wsl/connect-usb)
+Be sure to follow [Microsoft - WSL - Connect USB](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to share USB between host and WSL
 
 Windows CMD
-``` PowerShell
+```` PowerShell
 usbipd list
 ````
 
-``` PowerShell
+```` PowerShell
 usbipd attach --wsl --busid <busid>
 ````
 
 Linux Terminal
-``` Bash
+```` Bash
 lsusb
 ````
