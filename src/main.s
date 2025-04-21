@@ -2,15 +2,10 @@
 
 .list
 .org 0x0000
-    RJMP __start
+RJMP __start        ; Jump to main
 .org 0x0016
-    RJMP toggle_led     ; Timer1 Compare Match A ISR
+RJMP toggle_led     ; Timer1 Compare Match A ISR
 
-
-
-.global __start ; Makes __start visible to the linker as the program's 
-                ; entry point (tells the linker to use this as the 
-                ; reset vector).
 
 .equ PORTB, 0x05
 .equ DDRB,  0x04
@@ -75,7 +70,7 @@ toggle_led:
     ;OUT PORTB, R16
 
     ; DBG Instruction
-    CBI PORTB, 5
+    SBI PORTB, 5
 
     RETI            ; Return from interrupt
 
@@ -96,5 +91,5 @@ main:
     SBI DDRB, 5 ; Set the bit 5 of DDRB register (GPIO 13 set to OUTPUT)
     RCALL timer_setup
     SEI         ; Set Global Interrupt Flag
-    SBI PORTB, 5
+    CBI PORTB, 5
     RJMP loop
