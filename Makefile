@@ -16,7 +16,7 @@ CFLAGS = -mmcu=$(MCU) -Wall
 LDFLAGS = -mmcu=$(MCU) -nostartfiles 
 
 # Port for avrdude (change if needed)
-PORT = /dev/ttyACM1
+PORT = /dev/ttyACM0
 BAUD = 115200
 
 # File names

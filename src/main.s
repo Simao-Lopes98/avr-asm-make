@@ -2,24 +2,21 @@
 
 .list
 .org 0x0000
-RJMP __start        ; Jump to main
+RJMP main        ; Jump to main
 .org 0x0016
 RJMP toggle_led     ; Timer1 Compare Match A ISR
-
 
 .equ PORTB, 0x05
 .equ DDRB,  0x04
 .equ TCCR1A, 0x80
 .equ TCCR1B, 0x81
-.equ OCR1AH, 0x89
+.equ TCNT1L, 0x84
+.equ TCNT1H, 0x85
 .equ OCR1AL, 0x88
+.equ OCR1AH, 0x89
 .equ TIMSK1, 0x6F
 .equ SPH, 0x3E
 .equ SPL, 0x3D
-
-; Main code start
-__start:
-    RJMP main   ; Jump to your main code   
 
 ; Timer setup
 timer_setup:
@@ -27,17 +24,29 @@ timer_setup:
     LDI R16, 0x00       
     STS TCCR1A, R16
     
-    ; Set Prescaler and CTC mode
-    LDI R16, 0x0C
+    ; Clear TCCR1B
+    LDI R16, 0x00   
     STS TCCR1B, R16
 
-    ; Value to compare: 31249 -> 0x7A11
+    ; Clear TCNT1L
+    LDI R16, 0x00   
+    STS TCNT1L, R16
+
+    ; Clear TCNT1H
+    LDI R16, 0x00   
+    STS TCNT1H, R16
+    
+    ; Set Prescaler (1024) and CTC mode
+    LDI R16, 0x0D
+    STS TCCR1B, R16
+
+    ; Value to compare: 15624 -> 0x3D08
     ; Set the low word of the compare register OCR1AL
-    LDI R16, 0x11
+    LDI R16, 0x08
     STS OCR1AL, R16
     
     ; Set the high word of the compare register OCR1AH
-    LDI R16, 0x7A
+    LDI R16, 0x3D
     STS OCR1AH, R16 
     
     ; Set the bit 2 of TIMSK1 - Compare Interrupt Enable
